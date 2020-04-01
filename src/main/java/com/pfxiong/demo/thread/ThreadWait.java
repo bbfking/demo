@@ -15,7 +15,7 @@ public class ThreadWait {
         @Override
         public void run() {
             while (i <= 100) {
-//                synchronized (lock1) {
+                synchronized (lock1) {
                     System.out.println("T1:" + i++);
                     lock1.notify();
                     try {
@@ -23,7 +23,7 @@ public class ThreadWait {
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
-//                }
+                }
 
             }
         }
@@ -34,16 +34,15 @@ public class ThreadWait {
         public void run() {
 
             while (i <= 100) {
-//                synchronized (lock1) {
-                        System.out.println("T2:" + i++);
+                synchronized (lock1) {
+                    System.out.println("T2:" + i++);
                     lock1.notify();
                     try {
-//                        Thread.sleep(1000);
                         lock1.wait();
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
-//                }
+                }
             }
         }
     };
