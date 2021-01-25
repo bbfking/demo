@@ -1,5 +1,6 @@
 package com.pfxiong.demo.serialization.json;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.databind.SequenceWriter;
@@ -35,8 +36,9 @@ public class JacksonTest {
             scenes.add(scene);
         }
         ObjectMapper jsonMapper = new ObjectMapper();
+        jsonMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
         String rs = jsonMapper.writeValueAsString(scenes);
-        ObjectWriter writer = jsonMapper.writer().withDefaultPrettyPrinter();
+        ObjectWriter writer = jsonMapper.writer();
         FileWriter fileWriter = new FileWriter(new File("D://b.txt"));
         StringWriter stringWriter = new StringWriter();
         try (SequenceWriter sequenceWriter = writer.writeValues(stringWriter)) {
@@ -45,7 +47,6 @@ public class JacksonTest {
             for (int i = 0; i < 10; i++) {
                 Scene scene = new Scene();
                 scene.setId(i);
-                scene.setCreateTime(new Timestamp(System.currentTimeMillis()));
                 scene.setCommand(i + "testsettttt");
                 sequenceWriter.write(scene);
             }
