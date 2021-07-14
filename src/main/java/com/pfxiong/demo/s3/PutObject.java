@@ -1,5 +1,6 @@
 package com.pfxiong.demo.s3;
 
+import com.pfxiong.demo.util.EncryptUtil;
 import software.amazon.awssdk.core.sync.RequestBody;
 import software.amazon.awssdk.services.s3.S3Client;
 import software.amazon.awssdk.services.s3.model.PutObjectRequest;
@@ -34,19 +35,20 @@ public class PutObject {
 //        }
 
         String bucketName = "hfc14-a13test-bucket01";
-        String objectKey = "12908.log";
-        String objectPath = "D:\\12908.log";
+        String objectKey = "400.jpg";
+        String objectPath = "D:\\s3Test\\400.jpg";
 
         System.out.println("Putting object " + objectKey +" into bucket "+bucketName);
         System.out.println("  in bucket: " + bucketName);
 
 
 
-        S3Client s3 = S3Helper.getS3Client();
-
-        String result = putS3Object(s3, bucketName, objectKey, objectPath);
-        System.out.println("Tag information: "+result);
-        s3.close();
+//        S3Client s3 = S3Helper.getS3Client();
+        byte[] data = getObjectFile(objectPath);
+        System.out.println(EncryptUtil.md5(data));
+//        String result = putS3Object(s3, bucketName, objectKey, objectPath);
+//        System.out.println("Tag information: "+result);
+//        s3.close();
     }
 
     // snippet-start:[s3.java2.s3_object_upload.main]
@@ -66,8 +68,9 @@ public class PutObject {
                     .metadata(metadata)
                     .build();
 
+            byte[] data = getObjectFile(objectPath);
             PutObjectResponse response = s3.putObject(putOb,
-                    RequestBody.fromBytes(getObjectFile(objectPath)));
+                    RequestBody.fromBytes(data));
 
             return response.eTag();
 

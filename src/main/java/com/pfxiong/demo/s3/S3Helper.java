@@ -21,7 +21,7 @@ public class S3Helper {
 
     private static final Region REGION = Region.of("HZ");
 
-    public static final AwsCredentialsProvider CREDS = StaticCredentialsProvider.create(AwsBasicCredentials.create("**", "**"));
+    public static final AwsCredentialsProvider CREDS = StaticCredentialsProvider.create(AwsBasicCredentials.create("FT8JXXL7U2T8KTM82HAY", "u9zJnLUJJACLw2M0NHYGxmqJOkpnrB4GSAmZei4W"));
     //https://github.com/aws/aws-sdk-java-v2/issues/448 参考文档
     private static S3Client s3Client;
 
